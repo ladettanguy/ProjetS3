@@ -40,18 +40,65 @@ public class Graphe {
     }
 
     public Chemin plusCourtChemin (String nomRouteurDepart, String nomRouteurArrivee){
-        Routeur r = getRouteur(nomRouteurDepart);
-        if (r==null) {
+
+        // Cherche le routeur correspondant au nom donné
+        Routeur routeurDepart = getRouteur(nomRouteurDepart);
+
+        // Envoie un message d'erreur si routeurDepart n'est pas connu
+        if (routeurDepart==null) {
             System.out.println("Le routeur " + nomRouteurDepart + " n'est pas connu.");
             return null;
         }
-        Routeur r2 = getRouteur(nomRouteurArrivee);
-        if (r2 == null){
+
+        // Cherche le routeur correspondant au nom donné
+        Routeur routeurArrivee = getRouteur(nomRouteurArrivee);
+
+        // Envoie un message d'erreur si routeurDepart n'est pas connu
+        if (routeurArrivee == null){
             System.out.println("Le routeur " + nomRouteurArrivee + " n'est pas connu.");
             return null;
         }
+
+        // Crée un nouveau graphe qui est une copie de this
         Graphe graphe = new Graphe(this);
 
+        // Crée une étiquette de somme égale à 0 (étiquette de départ)
+        Etiquette cur = new Etiquette(0);
+
+        // Ajoute à l'étiquette le premier routeur donné
+        cur.ajouterRouteur(routeurDepart);
+
+        // Instancie la liste d'étiquettes à traiter ainsi que celle des étiquettes déjà traités
+        ArrayList<Etiquette> liste = new ArrayList<Etiquette>();
+        ArrayList<Etiquette> listeFinale = new ArrayList<Etiquette>();
+
+        // Ajoute l'étiquette de départ à la liste
+        liste.add(cur);
+
+        // 'j' indique l'indice de l'étiquette cur dans liste
+        int j = 0;
+
+        // Boucle qui traitera tout ce qui se trouve dans liste
+        while (liste.size()!=0){
+
+            /* Parcours total de liste afin de trouver l'étiquette qui possède la somme la plus petite
+            puis la place dans cur et place son indice dans j */
+            for (int i = 0; i < liste.size(); i++) {
+                if (liste.get(i).getSomme()<cur.getSomme()){
+                    cur = liste.get(i);
+                    j = i;
+                }
+            }
+
+            // Déplace cur de liste pour le mettre dans listeFinale
+            liste.remove(j);
+            listeFinale.add(cur);
+
+            // Boucle qui parcourt toutes les connexions du routeur de l'étiquette cur
+            for (Connexion c : cur.getDernierRouteur().getConnexions()) {
+
+            }
+        }
         return null;
     }
 

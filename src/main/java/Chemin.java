@@ -7,6 +7,11 @@ public class Chemin {
         listeRouteur = new ArrayList<Routeur>();
     }
 
+    public Chemin(Chemin c) {
+        listeRouteur = new ArrayList<Routeur>();
+        listeRouteur.addAll(c.listeRouteur);
+    }
+
     public void ajouterDebut(Routeur r){
         listeRouteur.add(0, r);
     }
@@ -21,5 +26,9 @@ public class Chemin {
             distance += listeRouteur.get(i).getConnexionVersUnRouteur(listeRouteur.get(i+1)).getDistance();
         }
         return distance;
+    }
+
+    public Routeur getDernierRouteur(){
+        return listeRouteur.get(listeRouteur.size()-1);
     }
 }
