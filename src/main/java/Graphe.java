@@ -62,21 +62,16 @@ public class Graphe {
         // Crée un nouveau graphe qui est une copie de this
         Graphe graphe = new Graphe(this);
 
-        // Crée une étiquette de somme égale à 0 (étiquette de départ)
-        Etiquette cur = new Etiquette(0);
-
-        // Ajoute à l'étiquette le premier routeur donné
-        cur.ajouterRouteur(routeurDepart);
+        // Crée sur le routeur de départ (étiquette de départ)
+        Chemin cur = new Chemin();
+        cur.ajouterFin(routeurDepart);
 
         // Instancie la liste d'étiquettes à traiter ainsi que celle des étiquettes déjà traités
-        ArrayList<Etiquette> liste = new ArrayList<Etiquette>();
-        ArrayList<Etiquette> listeFinale = new ArrayList<Etiquette>();
+        ArrayList<Chemin> liste = new ArrayList<Chemin>();
+        ArrayList<Chemin> listeFinale = new ArrayList<Chemin>();
 
         // Ajoute l'étiquette de départ à la liste
         liste.add(cur);
-
-        // 'j' indique l'indice de l'étiquette cur dans liste
-        int j = 0;
 
         // Boucle qui traitera tout ce qui se trouve dans liste
         while (liste.size()!=0){
@@ -84,8 +79,9 @@ public class Graphe {
             /* Parcours total de liste afin de trouver l'étiquette qui possède la somme la plus petite
             puis la place dans cur et place son indice dans j */
             cur = null;
+            int j = 0;
             for (int i = 0; i < liste.size(); i++) {
-                if (cur == null || liste.get(i).getSomme()<cur.getSomme()){
+                if (cur == null || liste.get(i).getLongueurChemin()<cur.getLongueurChemin()){
                     j = i;
                     cur = liste.get(j);
                 }
@@ -96,34 +92,31 @@ public class Graphe {
             listeFinale.add(cur);
 
             // Boucle qui parcourt toutes les connexions du routeur de l'étiquette cur
-            for (Connexion c : cur.getDernierRouteur().getConnexions()) {
+            for (Connexion connexion : cur.getDernierRouteur().getConnexions()) {
 
                 // Recherche si la destination de la connexion n'est pas un routeur déjà traité
                 boolean dejaTraite = false;
-                for (Etiquette e : listeFinale) {
-                    if (e.getDernierRouteur() == c.getRouteurDestinataire()) dejaTraite = true;
+                for (Chemin chemin : listeFinale) {
+                    if (chemin.getDernierRouteur() == connexion.getRouteurDestinataire()) dejaTraite = true;
                 }
-
                 if (!dejaTraite) {
                     /* Recherche si le routeur de la connexion possède déja une étiquette, si oui il place true dans existe
                     et il met à jour liste */
                     boolean existe = false;
                     for (int i = 0; i < liste.size(); i++) {
-                        if (liste.get(i).getDernierRouteur() == c.getRouteurDestinataire()) {
+                        if (liste.get(i).getDernierRouteur() == connexion.getRouteurDestinataire()) {
                             existe = true;
-                            if (cur.getSomme() + c.getDistance() < liste.get(i).getSomme()) {
+                            if (cur.getLongueurChemin() + connexion.getDistance() < liste.get(i).getLongueurChemin()) {
                                 liste.remove(i);
-                                Etiquette nouveau = new Etiquette(cur);
-                                nouveau.addSomme(c.getDistance());
-                                nouveau.ajouterRouteur(c.getRouteurDestinataire());
+                                Chemin nouveau = new Chemin(cur);
+                                nouveau.ajouterFin(connexion.getRouteurDestinataire());
                                 liste.add(nouveau);
                             }
                         }
                     }
                     if (!existe) {
-                        Etiquette nouveau = new Etiquette(cur);
-                        nouveau.addSomme(c.getDistance());
-                        nouveau.ajouterRouteur(c.getRouteurDestinataire());
+                        Chemin nouveau = new Chemin(cur);
+                        nouveau.ajouterFin(connexion.getRouteurDestinataire());
                         liste.add(nouveau);
                     }
                 }
@@ -131,8 +124,8 @@ public class Graphe {
         }
 
         // Recherche de l'étiquette correspondant au routeur demandé
-        for (Etiquette e : listeFinale) {
-            if (e.getDernierRouteur() == routeurArrivee) return e.getChemin();
+        for (Chemin chemin : listeFinale) {
+            if (chemin.getDernierRouteur() == routeurArrivee) return chemin;
         }
 
         // Renvoie null ainsi qu'un message d'erreur si aucun chemin n'est trouvé
