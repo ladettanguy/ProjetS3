@@ -130,9 +130,9 @@ public class Reseau {
     public String toString(){
         StringBuilder s = new StringBuilder();
         for (Routeur r:listeRouteur) {
-            s.append("Routeur " + r.getNomRouteur() + " :\n");
+            s.append("Routeur " + r.getNom() + " :\n");
             for (Connexion c:r.getConnexions()) {
-                s.append("  --> " + c.getRouteurDestinataire().getNomRouteur() + " - Distance : " + c.getDistance() + " - Fréquences disponibles : ");
+                s.append("  --> " + c.getRouteurDestinataire().getNom() + " - Distance : " + c.getDistance() + " - Fréquences disponibles : ");
                 String s2 = "[";
                 for (int i = 0; i < nombreFrequencesParConnexion; i++) {
                     if (c.getConnexions()[i]){
@@ -149,7 +149,7 @@ public class Reseau {
 
     private Routeur getRouteur(String s){
         for (Routeur r:listeRouteur) {
-            if (r.getNomRouteur().equals(s)) return r;
+            if (r.getNom().equals(s)) return r;
         }
         return null;
     }

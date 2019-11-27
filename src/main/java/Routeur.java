@@ -2,10 +2,10 @@ import java.util.ArrayList;
 
 public class Routeur {
     private ArrayList<Connexion> connexions;
-    private String nomRouteur;
+    private String nom;
 
     public Routeur(String nomRouteur) {
-        this.nomRouteur = nomRouteur;
+        this.nom = nomRouteur;
         connexions = new ArrayList<Connexion>();
     }
 
@@ -20,14 +20,14 @@ public class Routeur {
         return connexions;
     }
 
-    public String getNomRouteur() {
-        return nomRouteur;
+    public String getNom() {
+        return nom;
     }
 
     public void addConnexion(Connexion c){
         for (Connexion c2:connexions) {
             if (c2.getRouteurDestinataire() == c.getRouteurDestinataire()){
-                System.out.println("La connexion du routeur " + nomRouteur + " au routeur " + c.getRouteurDestinataire().getNomRouteur() + " exixste déjà.");
+                System.out.println("La connexion du routeur " + nom + " au routeur " + c.getRouteurDestinataire().getNom() + " exixste déjà.");
                 return;
             }
         }

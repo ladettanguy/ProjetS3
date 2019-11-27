@@ -36,8 +36,8 @@ public class Chemin {
     public String toString(){
         String s = "Chemin : ";
         for (Routeur r : listeRouteur) {
-            if (s.equals("Chemin : ")) s += r.getNomRouteur();
-            else s += ", " + r.getNomRouteur();
+            if (s.equals("Chemin : ")) s += r.getNom();
+            else s += ", " + r.getNom();
         }
         return s;
     }
