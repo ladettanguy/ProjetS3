@@ -31,4 +31,13 @@ public class Chemin {
     public Routeur getDernierRouteur(){
         return listeRouteur.get(listeRouteur.size()-1);
     }
+
+    public String toString(){
+        String s = "Chemin : ";
+        for (Routeur r : listeRouteur) {
+            if (s.equals("Chemin : ")) s += r.getNomRouteur();
+            else s += ", " + r.getNomRouteur();
+        }
+        return s;
+    }
 }

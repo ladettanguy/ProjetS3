@@ -8,7 +8,7 @@ public class Etiquette {
     }
 
     public Etiquette(Etiquette e) {
-        chemin = e.chemin;
+        chemin = new Chemin(e.chemin);
         somme = e.somme;
     }
 
@@ -22,5 +22,13 @@ public class Etiquette {
 
     public Routeur getDernierRouteur(){
         return chemin.getDernierRouteur();
+    }
+
+    public void addSomme(int i){
+        somme+=i;
+    }
+
+    public Chemin getChemin() {
+        return chemin;
     }
 }

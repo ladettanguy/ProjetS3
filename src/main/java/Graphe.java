@@ -83,10 +83,11 @@ public class Graphe {
 
             /* Parcours total de liste afin de trouver l'étiquette qui possède la somme la plus petite
             puis la place dans cur et place son indice dans j */
+            cur = null;
             for (int i = 0; i < liste.size(); i++) {
-                if (liste.get(i).getSomme()<cur.getSomme()){
-                    cur = liste.get(i);
+                if (cur == null || liste.get(i).getSomme()<cur.getSomme()){
                     j = i;
+                    cur = liste.get(j);
                 }
             }
 
@@ -97,8 +98,45 @@ public class Graphe {
             // Boucle qui parcourt toutes les connexions du routeur de l'étiquette cur
             for (Connexion c : cur.getDernierRouteur().getConnexions()) {
 
+                // Recherche si la destination de la connexion n'est pas un routeur déjà traité
+                boolean dejaTraite = false;
+                for (Etiquette e : listeFinale) {
+                    if (e.getDernierRouteur() == c.getRouteurDestinataire()) dejaTraite = true;
+                }
+
+                if (!dejaTraite) {
+                    /* Recherche si le routeur de la connexion possède déja une étiquette, si oui il place true dans existe
+                    et il met à jour liste */
+                    boolean existe = false;
+                    for (int i = 0; i < liste.size(); i++) {
+                        if (liste.get(i).getDernierRouteur() == cur.getDernierRouteur()) {
+                            existe = true;
+                            if (cur.getSomme() + c.getDistance() < liste.get(i).getSomme()) {
+                                liste.remove(i);
+                                Etiquette nouveau = new Etiquette(cur);
+                                nouveau.addSomme(c.getDistance());
+                                nouveau.ajouterRouteur(c.getRouteurDestinataire());
+                                liste.add(nouveau);
+                            }
+                        }
+                    }
+                    if (!existe) {
+                        Etiquette nouveau = new Etiquette(cur);
+                        nouveau.addSomme(c.getDistance());
+                        nouveau.ajouterRouteur(c.getRouteurDestinataire());
+                        liste.add(nouveau);
+                    }
+                }
             }
         }
+
+        // Recherche de l'étiquette correspondant au routeur demandé
+        for (Etiquette e : listeFinale) {
+            if (e.getDernierRouteur() == routeurArrivee) return e.getChemin();
+        }
+
+        // Renvoie null ainsi qu'un message d'erreur si aucun chemin n'est trouvé
+        System.out.println("Aucun chemin n'a été trouvé");
         return null;
     }
 
