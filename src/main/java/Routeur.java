@@ -4,16 +4,9 @@ public class Routeur {
     private ArrayList<Connexion> connexions;
     private String nom;
 
-    public Routeur(String nomRouteur) {
-        this.nom = nomRouteur;
+    public Routeur(String nom) {
+        this.nom = nom;
         connexions = new ArrayList<Connexion>();
-    }
-
-    public Connexion getConnexionVersUnRouteur(Routeur r){
-        for (Connexion c:connexions) {
-            if (c.getRouteurDestinataire()==r) return c;
-        }
-        return null;
     }
 
     public ArrayList<Connexion> getConnexions() {
@@ -24,9 +17,16 @@ public class Routeur {
         return nom;
     }
 
-    public void addConnexion(Connexion c){
-        for (Connexion c2:connexions) {
-            if (c2.getRouteurDestinataire() == c.getRouteurDestinataire()){
+    public Connexion getConnexionVersUnRouteur(Routeur r){
+        for (Connexion connexion:connexions) {
+            if (connexion.getRouteurDestinataire()==r) return connexion;
+        }
+        return null;
+    }
+
+    public void ajouterConnexion(Connexion c){
+        for (Connexion cur:connexions) {
+            if (cur.getRouteurDestinataire() == c.getRouteurDestinataire()){
                 System.out.println("La connexion du routeur " + nom + " au routeur " + c.getRouteurDestinataire().getNom() + " exixste déjà.");
                 return;
             }

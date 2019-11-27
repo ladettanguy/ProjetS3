@@ -25,8 +25,8 @@ public class Reseau {
             System.out.println("Le routeur " + nomRouteur2 + " n'est pas connu.");
             return;
         }
-        r.addConnexion(new Connexion(distance, r2, nombreFrequencesParConnexion));
-        r2.addConnexion(new Connexion(distance, r, nombreFrequencesParConnexion));
+        r.ajouterConnexion(new Connexion(distance, r2, nombreFrequencesParConnexion));
+        r2.ajouterConnexion(new Connexion(distance, r, nombreFrequencesParConnexion));
         return;
     }
 
