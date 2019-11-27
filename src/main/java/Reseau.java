@@ -1,15 +1,15 @@
 import java.util.ArrayList;
 
-public class Graphe {
+public class Reseau {
     private int nombreFrequencesParConnexion;
     private ArrayList<Routeur> listeRouteur;
 
-    public Graphe(int nombreFrequencesParConnexion) {
+    public Reseau(int nombreFrequencesParConnexion) {
         this.nombreFrequencesParConnexion = nombreFrequencesParConnexion;
         listeRouteur = new ArrayList<Routeur>();
     }
 
-    public Graphe(Graphe g){
+    public Reseau(Reseau g){
         nombreFrequencesParConnexion = g.nombreFrequencesParConnexion;
         listeRouteur = new ArrayList<Routeur>(g.listeRouteur);
     }
@@ -60,7 +60,7 @@ public class Graphe {
         }
 
         // Crée un nouveau graphe qui est une copie de this
-        Graphe graphe = new Graphe(this);
+        Reseau graphe = new Reseau(this);
 
         // Crée un chemin de départ et ajoute le routeur de départ
         Chemin cur = new Chemin();
