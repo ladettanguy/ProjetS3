@@ -16,8 +16,9 @@ public class Chemin {
         listeRouteur.add(0, r);
     }
 
-    public void ajouterFin(Routeur r){
+    public Chemin ajouterFin(Routeur r){
         listeRouteur.add(r);
+        return this;
     }
 
     public int getLongueurChemin(){
