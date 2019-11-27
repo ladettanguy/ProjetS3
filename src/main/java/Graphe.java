@@ -109,7 +109,7 @@ public class Graphe {
                     et il met à jour liste */
                     boolean existe = false;
                     for (int i = 0; i < liste.size(); i++) {
-                        if (liste.get(i).getDernierRouteur() == cur.getDernierRouteur()) {
+                        if (liste.get(i).getDernierRouteur() == c.getRouteurDestinataire()) {
                             existe = true;
                             if (cur.getSomme() + c.getDistance() < liste.get(i).getSomme()) {
                                 liste.remove(i);
