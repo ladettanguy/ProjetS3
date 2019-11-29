@@ -19,10 +19,10 @@ public class MainGraphe {
         r.ajouterConnexion("E", "G", 4);
         r.ajouterConnexion("G", "F", 1);
 
-        //System.out.println(g.toString());
+        System.out.println(r.toString());
 
-        Chemin plusCourt = r.plusCourtChemin("F", "D");
-        System.out.println(plusCourt.toString());
-        System.out.println("Longueur : " + plusCourt.getLongueurChemin());
+        //Chemin plusCourt = r.plusCourtChemin("F", "D");
+        //System.out.println(plusCourt.toString());
+        //System.out.println("Longueur : " + plusCourt.getLongueurChemin());
     }
 }

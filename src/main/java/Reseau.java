@@ -9,9 +9,9 @@ public class Reseau {
         listeRouteur = new ArrayList<Routeur>();
     }
 
-    public Reseau(Reseau g){
-        nombreFrequencesParConnexion = g.nombreFrequencesParConnexion;
-        listeRouteur = new ArrayList<Routeur>(g.listeRouteur);
+    public Reseau(Reseau r){
+        nombreFrequencesParConnexion = r.nombreFrequencesParConnexion;
+        listeRouteur = new ArrayList<Routeur>(r.listeRouteur);
     }
 
     public void ajouterConnexion(String nomRouteur1, String nomRouteur2, int distance){
@@ -135,7 +135,7 @@ public class Reseau {
                 s.append("  --> " + c.getRouteurDestinataire().getNom() + " - Distance : " + c.getDistance() + " - Fréquences disponibles : ");
                 String s2 = "[";
                 for (int i = 0; i < nombreFrequencesParConnexion; i++) {
-                    if (c.getConnexions()[i]){
+                    if (c.getTableauFrequences()[i]){
                         if (s2.equals("[")) s2 += i;
                         else s2 += ", " + i;
                     }
@@ -154,17 +154,59 @@ public class Reseau {
         return null;
     }
 
-    public void desactiverFrequences(String nomRouteur1, String nomRouteur2, int[] tab){
-        Routeur r = getRouteur(nomRouteur1);
+    public void desactiverFrequences(String nomRouteurDepart, String nomRouteurArrivee, int[] tab){
+        Routeur r = getRouteur(nomRouteurDepart);
         if (r==null) {
-            System.out.println("Le routeur " + nomRouteur1 + " n'est pas connu.");
+            System.out.println("Le routeur " + nomRouteurDepart + " n'est pas connu.");
             return;
         }
-        Routeur r2 = getRouteur(nomRouteur2);
+        Routeur r2 = getRouteur(nomRouteurArrivee);
         if (r2 == null){
-            System.out.println("Le routeur " + nomRouteur2 + " n'est pas connu.");
+            System.out.println("Le routeur " + nomRouteurArrivee + " n'est pas connu.");
+            return;
+        }
+        Connexion c = r.getConnexionVersUnRouteur(r2);
+        if (c==null) {
+            System.out.println("Il n'y a pas de connexion entre " + r.getNom() + " et " + r2.getNom());
             return;
         }
 
+        for (int i = 0; i < tab.length; i++) {
+            if (tab[i]<0 || tab[i]>=nombreFrequencesParConnexion){
+                System.out.println("Une fréquence entrée n'est pas dans l'intervalle [0, " + (nombreFrequencesParConnexion-1) + "], aucune fréquence n'a été modifiée");
+                return;
+            }
+        }
+        for (int i : tab) {
+            c.desactiverFrequence(i);
+        }
+    }
+
+    public void activerFrequences(String nomRouteurDepart, String nomRouteurArrivee, int[] tab){
+        Routeur r = getRouteur(nomRouteurDepart);
+        if (r==null) {
+            System.out.println("Le routeur " + nomRouteurDepart + " n'est pas connu.");
+            return;
+        }
+        Routeur r2 = getRouteur(nomRouteurArrivee);
+        if (r2 == null){
+            System.out.println("Le routeur " + nomRouteurArrivee + " n'est pas connu.");
+            return;
+        }
+        Connexion c = r.getConnexionVersUnRouteur(r2);
+        if (c==null) {
+            System.out.println("Il n'y a pas de connexion entre " + r.getNom() + " et " + r2.getNom());
+            return;
+        }
+
+        for (int i = 0; i < tab.length; i++) {
+            if (tab[i]<0 || tab[i]>=nombreFrequencesParConnexion){
+                System.out.println("Une fréquence entrée n'est pas dans l'intervalle [0, " + (nombreFrequencesParConnexion-1) + "], aucune fréquence n'a été modifiée");
+                return;
+            }
+        }
+        for (int i : tab) {
+            c.activerFrequence(i);
+        }
     }
 }

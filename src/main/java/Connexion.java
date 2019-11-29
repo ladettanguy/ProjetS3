@@ -1,19 +1,19 @@
 public class Connexion {
     private int distance;
     private Routeur routeurDestinataire;
-    private boolean[] connexions;
+    private boolean[] tableauFrequences;
 
     public Connexion(int distance, Routeur routeurDestinataire, int nbFrequencesMax) {
         this.distance = distance;
         this.routeurDestinataire = routeurDestinataire;
-        connexions = new boolean[nbFrequencesMax];
+        tableauFrequences = new boolean[nbFrequencesMax];
         for (int i = 0; i < nbFrequencesMax; i++) {
-            connexions[i] = true;
+            tableauFrequences[i] = true;
         }
     }
 
-    public boolean[] getConnexions() {
-        return connexions;
+    public boolean[] getTableauFrequences() {
+        return tableauFrequences;
     }
 
     public int getDistance() {
@@ -22,5 +22,13 @@ public class Connexion {
 
     public Routeur getRouteurDestinataire() {
         return routeurDestinataire;
+    }
+
+    public void desactiverFrequence (int i){
+        tableauFrequences[i] = false;
+    }
+
+    public void activerFrequence (int i){
+        tableauFrequences[i] = true;
     }
 }
