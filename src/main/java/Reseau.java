@@ -147,12 +147,10 @@ public class Reseau {
             }
         }
 
-        // Recherche de l'étiquette correspondant au routeur de destination demandé
+        // Recherche de l'étiquette correspondant au routeur de destination demandé si il existe, sinon renvoie null
         for (Chemin chemin : listeFinale) {
             if (chemin.getDernierRouteur() == routeurArrivee) return chemin;
         }
-
-        // Renvoie null si aucun chemin n'est trouvé
         return null;
     }
 
