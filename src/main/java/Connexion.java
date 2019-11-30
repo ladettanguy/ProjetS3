@@ -31,4 +31,8 @@ public class Connexion {
     public void activerFrequence (int i){
         tableauFrequences[i] = true;
     }
+
+    public boolean getFrequence (int i) {
+        return tableauFrequences[i];
+    }
 }

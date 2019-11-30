@@ -33,4 +33,14 @@ public class Routeur {
         }
         connexions.add(c);
     }
+
+    public void supprimerConnexionVersUnRouteur(Routeur r){
+        for (int i = 0; i < connexions.size(); i++) {
+            if (connexions.get(i).getRouteurDestinataire() == r){
+                connexions.remove(i);
+                return;
+            }
+        }
+        System.out.println("La connexion du routeur " + nom + " au routeur " + r.getNom() + " n'exixste pas.");
+    }
 }

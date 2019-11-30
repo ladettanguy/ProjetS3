@@ -19,7 +19,15 @@ public class MainGraphe {
         r.ajouterConnexion("E", "G", 4);
         r.ajouterConnexion("G", "F", 1);
 
-        System.out.println(r.toString());
+        r.desactiverFrequences("B", "A", new int[] {2});
+        r.desactiverFrequences("F", "G", new int[] {3});
+        r.desactiverFrequences("B", "C", new int[] {3});
+
+        //System.out.println(r.toString());
+
+        Chemin glouton = r.glouton1("F", "D", 4);
+        if (glouton != null) System.out.println(glouton.toString());
+        else System.out.println("Aucun chemin n'a été trouvé");
 
         //Chemin plusCourt = r.plusCourtChemin("F", "D");
         //System.out.println(plusCourt.toString());

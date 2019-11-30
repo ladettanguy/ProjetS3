@@ -9,9 +9,26 @@ public class Reseau {
         listeRouteur = new ArrayList<Routeur>();
     }
 
-    public Reseau(Reseau r){
+    public Reseau(Reseau r, int[] frequencesObligatoires){
         nombreFrequencesParConnexion = r.nombreFrequencesParConnexion;
-        listeRouteur = new ArrayList<Routeur>(r.listeRouteur);
+        listeRouteur = new ArrayList<Routeur>();
+        for (Routeur ancienRouteur : r.listeRouteur) {
+            addRouteur(ancienRouteur.getNom());
+        }
+        for (Routeur ancienRouteur : r.listeRouteur) {
+            for (Connexion ancienneConnexion : ancienRouteur.getConnexions()) {
+                boolean ajouter = true;
+                for (int i = 0; i < frequencesObligatoires.length; i++) {
+                    if (frequencesObligatoires[i]<0 || frequencesObligatoires[i]>=nombreFrequencesParConnexion){
+                        System.out.println("La fréquence entrée " + frequencesObligatoires[i] + " n'est pas dans l'intervalle [0, " + (nombreFrequencesParConnexion-1) + "], le reseau ne s'est donc pas crée correctement.");
+                    }
+                    else {
+                        if (!ancienneConnexion.getFrequence(frequencesObligatoires[i])) ajouter = false;
+                    }
+                }
+                if (ajouter) getRouteur(ancienRouteur.getNom()).ajouterConnexion(new Connexion(ancienneConnexion.getDistance(), getRouteur(ancienneConnexion.getRouteurDestinataire().getNom()), nombreFrequencesParConnexion));
+            }
+        }
     }
 
     public void ajouterConnexion(String nomRouteur1, String nomRouteur2, int distance){
@@ -27,6 +44,22 @@ public class Reseau {
         }
         r.ajouterConnexion(new Connexion(distance, r2, nombreFrequencesParConnexion));
         r2.ajouterConnexion(new Connexion(distance, r, nombreFrequencesParConnexion));
+        return;
+    }
+
+    public void supprimerConnexion(String nomRouteur1, String nomRouteur2){
+        Routeur r = getRouteur(nomRouteur1);
+        if (r==null) {
+            System.out.println("Le routeur " + nomRouteur1 + " n'est pas connu.");
+            return;
+        }
+        Routeur r2 = getRouteur(nomRouteur2);
+        if (r2 == null){
+            System.out.println("Le routeur " + nomRouteur2 + " n'est pas connu.");
+            return;
+        }
+        r.supprimerConnexionVersUnRouteur(r2);
+        r2.supprimerConnexionVersUnRouteur(r);
         return;
     }
 
@@ -58,9 +91,6 @@ public class Reseau {
             System.out.println("Le routeur " + nomRouteurArrivee + " n'est pas connu.");
             return null;
         }
-
-        // Crée un nouveau graphe qui est une copie de this
-        Reseau graphe = new Reseau(this);
 
         // Crée un chemin de départ et ajoute le routeur de départ
         Chemin cur = new Chemin();
@@ -122,8 +152,32 @@ public class Reseau {
             if (chemin.getDernierRouteur() == routeurArrivee) return chemin;
         }
 
-        // Renvoie null ainsi qu'un message d'erreur si aucun chemin n'est trouvé
-        System.out.println("Aucun chemin n'a été trouvé");
+        // Renvoie null si aucun chemin n'est trouvé
+        return null;
+    }
+
+    public Chemin glouton1(String nomRouteurDepart, String nomRouteurArrivee, int nbFrequenceConsecutives){
+        Routeur r = getRouteur(nomRouteurDepart);
+        if (r==null) {
+            System.out.println("Le routeur " + nomRouteurDepart + " n'est pas connu.");
+            return null;
+        }
+        Routeur r2 = getRouteur(nomRouteurArrivee);
+        if (r2 == null){
+            System.out.println("Le routeur " + nomRouteurArrivee + " n'est pas connu.");
+            return null;
+        }
+        int[] tabfrequences = new int[nbFrequenceConsecutives];
+        for (int i = -1; i < nbFrequenceConsecutives-1; i++) {
+            tabfrequences[i+1] = i;
+        }
+        for (int i = 0; i < nombreFrequencesParConnexion - nbFrequenceConsecutives + 1; i++) {
+            for (int j = 0; j < nbFrequenceConsecutives; j++) {
+                tabfrequences[j]++;
+            }
+            Chemin c = new Reseau(this, tabfrequences).plusCourtChemin(nomRouteurDepart, nomRouteurArrivee);
+            if (c != null) return c;
+        }
         return null;
     }
 
