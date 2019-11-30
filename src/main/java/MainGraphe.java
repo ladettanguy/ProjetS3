@@ -1,6 +1,6 @@
 public class MainGraphe {
     public static void main(String[] args){
-        Reseau r = new Reseau(5);
+       /* Reseau r = new Reseau(5);
         r.addRouteur("A");
         r.addRouteur("B");
         r.addRouteur("C");
@@ -32,5 +32,11 @@ public class MainGraphe {
         //Chemin plusCourt = r.plusCourtChemin("F", "D");
         //System.out.println(plusCourt.toString());
         //System.out.println("Longueur : " + plusCourt.getLongueurChemin());
+
+        */
+
+       Reseau r = GénérationGraphe.generer("1");
+       if(r == null) System.out.println("il est null");
+       else System.out.println(r);
     }
 }

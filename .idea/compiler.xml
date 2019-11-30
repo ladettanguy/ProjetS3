@@ -10,5 +10,6 @@
         <module name="Projet_S3" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel target="10" />
   </component>
 </project>

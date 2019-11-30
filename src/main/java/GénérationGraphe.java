@@ -9,26 +9,25 @@ import org.json.simple.parser.ParseException;
 
 
 public class GénérationGraphe {
-    public static Reseau generer() {
+    public static Reseau generer(String mode) {
         JSONParser parser = new JSONParser();
 
 
         try {
-            Object obj = parser.parse(new FileReader("c:\\file.json"));
+            Object obj = parser.parse(new FileReader("/home/tamikata/IdeaProjects/ProjetS3/Reseau.json"));
 
-            JSONObject jsonObject = (JSONObject) obj;
+            System.out.println("1\n");
 
-            String name = (String) jsonObject.get("name");
-            System.out.println(name);
+            JSONObject reseauJson = (JSONObject) obj;
 
-            String city = (String) jsonObject.get("city");
-            System.out.println(city);
+            System.out.println("\n");
 
-            String job = (String) jsonObject.get("job");
-            System.out.println(job);
+            JSONObject s = (JSONObject) reseauJson.get(mode);
+
+            System.out.println(s.routeur+"\n");
 
             // loop array
-            JSONArray cars = (JSONArray) jsonObject.get("cars");
+            JSONArray cars = (JSONArray) reseauJson.get("Routeur");
             Iterator<String> iterator = cars.iterator();
             while (iterator.hasNext()) {
                 System.out.println(iterator.next());
