@@ -33,7 +33,7 @@ public class MainGraphe {
         //System.out.println(plusCourt.toString());
         //System.out.println("Longueur : " + plusCourt.getLongueurChemin());*/
 
-        Reseau r = GénérationGraphe.generer();
+        Reseau r = GenerationGraphe.generer();
         System.out.println(r);
     }
 }

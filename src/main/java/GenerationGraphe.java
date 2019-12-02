@@ -1,19 +1,15 @@
-import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
 import java.lang.String;
 import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 import java.util.Iterator;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
-public class GénérationGraphe {
+public class GenerationGraphe {
+    private static JSONParser parser = new JSONParser();
+
     public static Reseau generer() {
-        JSONParser parser = new JSONParser();
-        String filePath = "./Reseau.json";
+        String filePath = "";
         Reseau r = null;
         try (FileReader fichier = new FileReader(ClassLoader.getSystemResource(filePath).getFile()))
         {
@@ -21,10 +17,9 @@ public class GénérationGraphe {
             JSONArray routeurs = (JSONArray) jsonObject.get("routeur");
             r = new Reseau(20);
 
-            Iterator i = routeurs.iterator();
-            while(i.hasNext()) r.addRouteur((String) i.next());
+            Iterator routeurArray = routeurs.iterator();
+            while(routeurArray.hasNext()) r.addRouteur((String) routeurArray.next());
 
-            System.out.println(r);
             JSONArray arrayConnexion = (JSONArray) jsonObject.get("connexion");
             Iterator arrayConnexionIterator = arrayConnexion.iterator();
             while(arrayConnexionIterator.hasNext()){
