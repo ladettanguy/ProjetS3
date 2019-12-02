@@ -11,48 +11,35 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 public class GénérationGraphe {
-    public static Reseau generer(String mode) {
+    public static Reseau generer() {
         JSONParser parser = new JSONParser();
-        String filePath = "/home/tamikata/IdeaProjects/ProjetS3/Reseau.json";
-
-        try (FileReader fichier = new FileReader(ClassLoader.getSystemResource(filePath).getFile())) {
-
+        String filePath = "./Reseau.json";
+        Reseau r = null;
+        try (FileReader fichier = new FileReader(ClassLoader.getSystemResource(filePath).getFile()))
+        {
             JSONObject jsonObject = (JSONObject) parser.parse(fichier);
+            JSONArray routeurs = (JSONArray) jsonObject.get("routeur");
+            r = new Reseau(20);
 
-            JSONObject s = (JSONObject) jsonObject.get(mode);
-
-            JSONArray routeurs = (JSONArray) s.get("routeur");
-            Reseau r = new Reseau(20);
             Iterator i = routeurs.iterator();
-            while(i.hasNext()){
+            while(i.hasNext()) r.addRouteur((String) i.next());
 
+            System.out.println(r);
+            JSONArray arrayConnexion = (JSONArray) jsonObject.get("connexion");
+            Iterator arrayConnexionIterator = arrayConnexion.iterator();
+            while(arrayConnexionIterator.hasNext()){
+                JSONArray connexion = (JSONArray) arrayConnexionIterator.next();
+                if(connexion.size() == 3)
+                    for (int j = 0; j < 3; j++)
+                        r.ajouterConnexion((String) connexion.get(0),(String) connexion.get(1),(int)connexion.get(2));
+                else if(connexion.size() == 4)
+                    for (int j = 0; j < 4; j++)
+                        System.out.println("pas encore implémenté");
             }
-            System.out.println(s);
-            /*System.out.println("1\n");
-
-            JSONObject reseauJson = (JSONObject) obj;
-
-            System.out.println("\n");
-
-            JSONObject s = (JSONObject) reseauJson.get(mode);
-
-            System.out.println(s+"\n");
-
-            // loop array
-            JSONArray cars = (JSONArray) reseauJson.get("Routeur");
-            Iterator<String> iterator = cars.iterator();
-            while (iterator.hasNext()) {
-                System.out.println(iterator.next());
-            }*/
-
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
+        }
+        catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
+        return r;
     }
 }
