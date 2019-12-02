@@ -3,7 +3,6 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import java.io.FileReader;
-import java.util.Iterator;
 
 public class GenerationGraphe {
     private static JSONParser parser = new JSONParser();
@@ -13,22 +12,23 @@ public class GenerationGraphe {
         Reseau r = null;
         try
         {
-            FileReader file = new FileReader("/home/tamikata/IdeaProjects/ProjetS3/Reseau.json");
+            //Lire le fichier JSON
+            FileReader file = new FileReader(filePath);
             JSONObject jsonObject = (JSONObject) parser.parse(file);
             JSONArray routeurs = (JSONArray) jsonObject.get("routeur");
-            r = new Reseau(20);
+            r = new Reseau(255);
+
+            //Création des routeurs
             for (Object routeur: routeurs) r.addRouteur((String) routeur);
             JSONArray arrayConnexion = (JSONArray) jsonObject.get("connexion");
 
-            Iterator arrayConnexionIterator = arrayConnexion.iterator();
-            while(arrayConnexionIterator.hasNext()) {
-                JSONArray connexion = (JSONArray) arrayConnexionIterator.next();
-                if (connexion.size() == 3)
-                    for (int j = 0; j < 3; j++)
-                        r.ajouterConnexion((String) connexion.get(0), (String) connexion.get(1), (int) ((long) connexion.get(2)));
-                else if (connexion.size() == 4)
-                    for (int j = 0; j < 4; j++)
-                        System.out.println("pas encore implémenté");
+            //Création des Connexions
+            for (Object arrayParameters: arrayConnexion) {
+                JSONArray parameters = (JSONArray) arrayParameters;
+                if (parameters.size() == 3)
+                        r.ajouterConnexion((String) parameters.get(0), (String) parameters.get(1), (int) ((long) parameters.get(2)));
+                else if (parameters.size() == 4)
+                        r.ajouterConnexion((String) parameters.get(0), (String) parameters.get(1), (int) ((long) parameters.get(2)),(int) ((long) parameters.get(3)));
             }
         }
         catch (Exception e) {
