@@ -1,0 +1,10 @@
+Routeurs :
+A
+B
+C
+D
+E
+F
+Connexions :
+A B 4
+A C 6

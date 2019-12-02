@@ -1,5 +1,6 @@
 public class MainGraphe {
     public static void main(String[] args){
+
         /*Reseau r = new Reseau(5);
         r.addRouteur("A");
         r.addRouteur("B");
@@ -21,19 +22,19 @@ public class MainGraphe {
 
         r.desactiverFrequences("B", "A", new int[] {2});
         r.desactiverFrequences("F", "G", new int[] {3});
-        r.desactiverFrequences("B", "C", new int[] {3});
+        r.desactiverFrequences("B", "C", new int[] {3});*/
 
         //System.out.println(r.toString());
 
-        Chemin glouton = r.glouton1("F", "D", 4);
-        if (glouton != null) System.out.println(glouton.toString());
-        else System.out.println("Aucun chemin n'a été trouvé");
+        //Chemin glouton = r.glouton1("F", "D", 4);
+        //if (glouton != null) System.out.println(glouton.toString());
+        //else System.out.println("Aucun chemin n'a été trouvé");
 
         //Chemin plusCourt = r.plusCourtChemin("F", "D");
         //System.out.println(plusCourt.toString());
-        //System.out.println("Longueur : " + plusCourt.getLongueurChemin());*/
+        //System.out.println("Longueur : " + plusCourt.getLongueurChemin());
 
-        Reseau r = GenerationGraphe.generer();
+        Reseau r = GenerationGraphe.genererTXT(10);
         System.out.println(r);
     }
 }

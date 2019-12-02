@@ -2,13 +2,15 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 
 public class GenerationGraphe {
     private static JSONParser parser = new JSONParser();
 
-    public static Reseau generer() {
-        String filePath = "/home/tamikata/IdeaProjects/ProjetS3/Reseau.json";
+    public static Reseau genererJSON() {
+        String filePath = "Reseau.json";
         Reseau r = null;
         try
         {
@@ -35,5 +37,25 @@ public class GenerationGraphe {
             e.printStackTrace();
         }
         return r;
+    }
+
+    public static Reseau genererTXT(int nbMaxFrequences){
+        Reseau r = new Reseau(nbMaxFrequences);
+        try {
+            BufferedReader read = new BufferedReader(new FileReader(new File("D:\\ProjetS3\\src\\main\\java\\generateurGraphe.txt")));
+            String str = read.readLine();
+            while ((str = read.readLine()) != null && !str.equals("Connexions :")){
+                r.addRouteur(str);
+            }
+            while ((str = read.readLine()) != null){
+                String[] split = str.split(" ");
+                r.ajouterConnexion(split[0], split[1], Integer.parseInt(split[2]));
+            }
+            return r;
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
     }
 }
