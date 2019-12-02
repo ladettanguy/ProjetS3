@@ -1,4 +1,5 @@
 {
+  "name": "tanguy",
   "1": {
     "routeur": [
       "a",
@@ -6,7 +7,7 @@
       "c",
       "d"
     ],
-    "Connexion": [
+    "connexion": [
       [
         "a",
         "b",
