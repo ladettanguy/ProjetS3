@@ -10,7 +10,7 @@ public class GenerationGraphe {
     private static JSONParser parser = new JSONParser();
 
     public static Reseau genererJSON() {
-        String filePath = "./Reseau.json";
+        String filePath = "Reseau.json";
         Reseau r = null;
         try
         {
@@ -42,7 +42,7 @@ public class GenerationGraphe {
     public static Reseau genererTXT(int nbMaxFrequences){
         Reseau r = new Reseau(nbMaxFrequences);
         try {
-            BufferedReader read = new BufferedReader(new FileReader(new File("D:\\ProjetS3\\src\\main\\java\\generateurGraphe.txt")));
+            BufferedReader read = new BufferedReader(new FileReader(new File("generateurGraphe.txt")));
             String str = read.readLine();
             while ((str = read.readLine()) != null && !str.equals("Connexions :")){
                 r.addRouteur(str);
