@@ -1,5 +1,5 @@
 <component name="libraryTable">
-  <library name="org.apache.clerezza.ext:org.json.simple:0.4" type="repository">
+  <library name="org.apache.clerezza.ext:org.json.simple:0.41" type="repository">
     <properties maven-id="org.apache.clerezza.ext:org.json.simple:0.4" />
     <CLASSES>
       <root url="jar://$MAVEN_REPOSITORY$/org/apache/clerezza/ext/org.json.simple/0.4/org.json.simple-0.4.jar!/" />

@@ -9,8 +9,7 @@ import java.io.FileReader;
 public class GenerationGraphe {
     private static JSONParser parser = new JSONParser();
 
-    public static Reseau genererJSON() {
-        String filePath = "Reseau.json";
+    public static Reseau genererJSON(String filePath) {
         Reseau r = null;
         try
         {
@@ -36,11 +35,12 @@ public class GenerationGraphe {
         return r;
     }
 
-    public static Reseau genererTXT(int nbMaxFrequences){
+    public static Reseau genererTXT(String filePath,int nbMaxFrequences){
         Reseau r = new Reseau(nbMaxFrequences);
         try {
-            BufferedReader read = new BufferedReader(new FileReader(new File("generateurGraphe.txt")));
-            String str = read.readLine();
+            BufferedReader read = new BufferedReader(new FileReader(new File("filePath")));
+            String str;
+            str = read.readLine();
             while ((str = read.readLine()) != null && !str.equals("Connexions :")){
                 r.addRouteur(str);
             }

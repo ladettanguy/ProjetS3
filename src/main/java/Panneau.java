@@ -10,18 +10,16 @@ public class Panneau extends JPanel {
 
     private Reseau r;
 
-    public void paintComponent(Graphics g){
-        this.add(new Button("btn1"));
+    protected void paintComponent(Graphics g){
+        if (r != null) {
+            for (int i = 0; i < r.getListeRouteur().size(); i++) {
+                g.drawOval(15+(i*35), 200, 30, 30);
+            }
+        }
     }
 
-    public void setReseau(Reseau r){
+    void setReseau(Reseau r){
         this.r = r;
     }
 
-
-    public void drawGraph(Graphics g){
-        r.getListeRouteur().size();
-        g.drawOval(10,10,75,75);
-        g.drawString("Paris",75/2-5,75/2-5);
-    }
 }

@@ -1,27 +1,71 @@
-import javax.swing.JFrame;
+import javax.swing.*;
+import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 import java.awt.*;
-import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class Fenetre extends JFrame {
-    public Fenetre(Reseau r){
-        this.setTitle("Ma première fenêtre Java");
+class Fenetre extends JFrame {
+    private Panneau contentPane = new Panneau();
+
+    Fenetre(){
         this.setSize(400, 500);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        //Etre redimensionner ou pas
         this.setResizable(true);
-
-        //Enlever le contours ou pas
         this.setUndecorated(false);
-
-        //Instanciation d'un objet JPanel
-        Panneau pan = new Panneau();
-        //Définition de sa couleur de fond
-        pan.setBackground(Color.LIGHT_GRAY);
-        //On prévient notre JFrame que notre JPanel sera son content pane
-        this.setContentPane(pan);
-
+        this.setContentPane(contentPane);
+        contentPane.setBackground(Color.LIGHT_GRAY);
+        go();
         this.setVisible(true);
+    }
+
+    void go(){
+        final JTextField text = new JTextField("FilePath to *.json");
+        text.setColumns(14);
+        final JButton btn = new JButton("Envoyer");
+        final JCheckBox checkJson = new JCheckBox("Json");
+        final JCheckBox checkTxt = new JCheckBox("Txt");
+
+        contentPane.setLayout(new FlowLayout());
+        contentPane.add(checkTxt);
+        contentPane.add(checkJson);
+        contentPane.add(text);
+        contentPane.add(btn);
+
+
+
+
+
+
+
+        btn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if ((checkJson.isSelected())) {
+                    contentPane.setReseau(GenerationGraphe.genererJSON(text.getText()));
+                }
+                else {
+                    if ((checkTxt.isSelected())) {
+                        contentPane.setReseau(GenerationGraphe.genererTXT(text.getText(), 10));
+                    }
+                }
+            }
+        });
+
+        checkJson.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(checkTxt.isSelected()) checkTxt.setSelected(false);
+                text.setText("FilePath to *.json");
+            }
+        });
+
+        checkTxt.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(checkJson.isSelected()) checkJson.setSelected(false);
+                text.setText("FilePath to *.txt");
+            }
+        });
     }
 }
