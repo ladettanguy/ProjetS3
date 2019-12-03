@@ -210,6 +210,8 @@ public class Reseau {
         return null;
     }
 
+    public ArrayList<Routeur> getListeRouteur(){ return listeRouteur; }
+
     public void desactiverFrequences(String nomRouteurDepart, String nomRouteurArrivee, int[] tab){
         Routeur r = getRouteur(nomRouteurDepart);
         if (r==null) {

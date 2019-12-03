@@ -27,10 +27,7 @@ public class GenerationGraphe {
             //Création des Connexions
             for (Object arrayParameters: arrayConnexion) {
                 JSONArray parameters = (JSONArray) arrayParameters;
-                if (parameters.size() == 3)
-                        r.ajouterConnexion((String) parameters.get(0), (String) parameters.get(1), (int) ((long) parameters.get(2)));
-                else if (parameters.size() == 4)
-                        r.ajouterConnexion((String) parameters.get(0), (String) parameters.get(1), (int) ((long) parameters.get(2)),(int) ((long) parameters.get(3)));
+                r.ajouterConnexion((String) parameters.get(0), (String) parameters.get(1), (int) ((long) parameters.get(2)));
             }
         }
         catch (Exception e) {

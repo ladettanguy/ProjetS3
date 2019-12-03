@@ -1,9 +1,9 @@
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import java.awt.Color;
+import java.awt.*;
+import java.awt.Graphics;
 
 public class Fenetre extends JFrame {
-    public Fenetre(){
+    public Fenetre(Reseau r){
         this.setTitle("Ma première fenêtre Java");
         this.setSize(400, 500);
         this.setLocationRelativeTo(null);
