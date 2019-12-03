@@ -32,10 +32,6 @@ public class Reseau {
     }
 
     public void ajouterConnexion(String nomRouteur1, String nomRouteur2, int distance){
-        ajouterConnexion(nomRouteur1,nomRouteur2,distance,nombreFrequencesParConnexion);
-    }
-
-    public void ajouterConnexion(String nomRouteur1, String nomRouteur2, int distance, int nbFrequence){
         Routeur r = getRouteur(nomRouteur1);
         if (r==null) {
             System.out.println("Le routeur " + nomRouteur1 + " n'est pas connu.");
@@ -46,8 +42,8 @@ public class Reseau {
             System.out.println("Le routeur " + nomRouteur2 + " n'est pas connu.");
             return;
         }
-        r.ajouterConnexion(new Connexion(distance, r2, nbFrequence));
-        r2.ajouterConnexion(new Connexion(distance, r, nbFrequence));
+        r.ajouterConnexion(new Connexion(distance, r2, nombreFrequencesParConnexion));
+        r2.ajouterConnexion(new Connexion(distance, r, nombreFrequencesParConnexion));
         return;
     }
 

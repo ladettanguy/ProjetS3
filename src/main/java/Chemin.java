@@ -2,6 +2,7 @@ import java.util.ArrayList;
 
 public class Chemin {
     private ArrayList<Routeur> listeRouteur;
+    private int[] frequenceUtilisees;
 
     public Chemin() {
         listeRouteur = new ArrayList<Routeur>();
@@ -10,6 +11,14 @@ public class Chemin {
     public Chemin(Chemin c) {
         listeRouteur = new ArrayList<Routeur>();
         listeRouteur.addAll(c.listeRouteur);
+        frequenceUtilisees = new int[c.frequenceUtilisees.length];
+        for (int i = 0; i < c.frequenceUtilisees.length; i++) {
+            frequenceUtilisees[i] = c.frequenceUtilisees[i];
+        }
+    }
+
+    public void setFrequenceUtilisees(int[] frequenceUtilisees) {
+        this.frequenceUtilisees = frequenceUtilisees;
     }
 
     public void ajouterDebut(Routeur r){
@@ -38,6 +47,14 @@ public class Chemin {
         for (Routeur r : listeRouteur) {
             if (s.equals("Chemin : ")) s += r.getNom();
             else s += ", " + r.getNom();
+        }
+        if (frequenceUtilisees != null){
+            s += "\nFréquences utilisés : (";
+            for (int i : frequenceUtilisees) {
+                if (s.charAt(s.length()-1)=='(') s += i;
+                else s += ", " + i;
+            }
+            s += ")";
         }
         return s;
     }
