@@ -10,12 +10,12 @@ public class GenerationGraphe {
     private static JSONParser parser = new JSONParser();
 
     public static Reseau genererJSON() {
-        String filePath = "Reseau.json";
+        String filePath = "./Reseau.json";
         Reseau r = null;
         try
         {
             //Lire le fichier JSON
-            FileReader file = new FileReader(filePath);
+            FileReader file = new FileReader(new File (filePath));
             JSONObject jsonObject = (JSONObject) parser.parse(file);
             JSONArray routeurs = (JSONArray) jsonObject.get("routeur");
             r = new Reseau(255);

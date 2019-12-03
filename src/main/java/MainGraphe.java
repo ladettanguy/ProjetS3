@@ -1,3 +1,6 @@
+
+
+
 public class MainGraphe {
     public static void main(String[] args){
 
@@ -34,7 +37,10 @@ public class MainGraphe {
         //System.out.println(plusCourt.toString());
         //System.out.println("Longueur : " + plusCourt.getLongueurChemin());
 
-        Reseau r = GenerationGraphe.genererTXT(10);
-        System.out.println(r);
+        //Reseau r = GenerationGraphe.genererJSON();
+        //System.out.println(r);
+
+
+        Fenetre fen = new Fenetre();
     }
 }
