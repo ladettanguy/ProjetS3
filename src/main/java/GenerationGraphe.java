@@ -17,7 +17,7 @@ public class GenerationGraphe {
             FileReader file = new FileReader(new File (filePath));
             JSONObject jsonObject = (JSONObject) parser.parse(file);
             JSONArray routeurs = (JSONArray) jsonObject.get("routeur");
-            r = new Reseau(255);
+            r = new Reseau(20);
 
             //Création des routeurs
             for (Object routeur: routeurs) r.addRouteur((String) routeur);
