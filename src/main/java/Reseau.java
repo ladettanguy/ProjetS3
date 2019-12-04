@@ -174,7 +174,14 @@ public class Reseau {
                 tabfrequences[j]++;
             }
             Chemin c = new Reseau(this, tabfrequences).plusCourtChemin(nomRouteurDepart, nomRouteurArrivee);
-            if (c != null) return c;
+            if (c != null) {
+                Chemin ch = new Chemin();
+                ch.setFrequenceUtilisees(tabfrequences);
+                for (Routeur routeur : c.getListeRouteur()) {
+                    ch.ajouterFin(getRouteur(routeur.getNom()));
+                }
+                return ch;
+            }
         }
         return null;
     }

@@ -38,7 +38,7 @@ public class GenerationGraphe {
     public static Reseau genererTXT(String filePath,int nbMaxFrequences){
         Reseau r = new Reseau(nbMaxFrequences);
         try {
-            BufferedReader read = new BufferedReader(new FileReader(new File("filePath")));
+            BufferedReader read = new BufferedReader(new FileReader(new File(filePath)));
             String str;
             str = read.readLine();
             while ((str = read.readLine()) != null && !str.equals("Connexions :")){

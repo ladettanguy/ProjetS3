@@ -6,6 +6,7 @@ public class Chemin {
 
     public Chemin() {
         listeRouteur = new ArrayList<Routeur>();
+        frequenceUtilisees = new int[0];
     }
 
     public Chemin(Chemin c) {
@@ -42,20 +43,33 @@ public class Chemin {
         return listeRouteur.get(listeRouteur.size()-1);
     }
 
+    public ArrayList<Routeur> getListeRouteur() {
+        return listeRouteur;
+    }
+
+    public void desactiverFrequences(){
+        for (int i = 0; i < listeRouteur.size()-1; i++) {
+            for (int j = 0; j < frequenceUtilisees.length; j++) {
+                listeRouteur.get(i).getConnexionVersUnRouteur(listeRouteur.get(i+1)).desactiverFrequence(frequenceUtilisees[j]);
+            }
+        }
+    }
+
     public String toString(){
         String s = "Chemin : ";
         for (Routeur r : listeRouteur) {
             if (s.equals("Chemin : ")) s += r.getNom();
             else s += ", " + r.getNom();
         }
-        if (frequenceUtilisees != null){
-            s += "\nFréquences utilisés : (";
+        if (frequenceUtilisees.length != 0){
+            s += "\nFréquences utilisés : [";
             for (int i : frequenceUtilisees) {
-                if (s.charAt(s.length()-1)=='(') s += i;
+                if (s.charAt(s.length()-1)=='[') s += i;
                 else s += ", " + i;
             }
-            s += ")";
+            s += "]";
         }
+        s += "\nLongueur du chemin : " + getLongueurChemin();
         return s;
     }
 }
