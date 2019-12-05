@@ -35,4 +35,9 @@ public class Connexion {
     public boolean getFrequence (int i) {
         return tableauFrequences[i];
     }
+
+    public boolean isNull(){
+        if(this == null) System.out.println("Il n'y a pas de connexion entre ces deux routeurs");
+        return this == null;
+    }
 }

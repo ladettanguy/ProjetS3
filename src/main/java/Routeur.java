@@ -43,4 +43,9 @@ public class Routeur {
         }
         System.out.println("La connexion du routeur " + nom + " au routeur " + r.getNom() + " n'exixste pas.");
     }
+
+    public boolean isNull(){
+        if( this == null) System.out.println("Le routeur " + this + " n'est pas connu.");
+        return this == null;
+    }
 }
