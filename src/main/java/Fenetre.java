@@ -19,7 +19,7 @@ class Fenetre extends JFrame {
     }
 
     void go(){
-        final JTextField text = new JTextField("FilePath to *.json");
+        final JTextField text = new JTextField("Reseau.json");
         text.setColumns(14);
         final JButton btn = new JButton("Envoyer");
         final JCheckBox checkJson = new JCheckBox("Json");
@@ -48,6 +48,8 @@ class Fenetre extends JFrame {
                         contentPane.setReseau(GenerationGraphe.genererTXT(text.getText(), 10));
                     }
                 }
+                Graphics g = contentPane.getGraphics();
+                contentPane.genererReseau(g);
             }
         });
 

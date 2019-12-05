@@ -206,7 +206,7 @@ public class Reseau {
         return s.toString();
     }
 
-    private Routeur getRouteur(String s){
+    protected Routeur getRouteur(String s){
         for (Routeur r:listeRouteur) {
             if (r.getNom().equals(s)) return r;
         }
