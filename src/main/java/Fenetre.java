@@ -65,7 +65,7 @@ class Fenetre extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(checkJson.isSelected()) checkJson.setSelected(false);
-                text.setText("FilePath to *.txt");
+                text.setText("graphe.txt");
             }
         });
     }
