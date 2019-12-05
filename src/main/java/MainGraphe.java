@@ -12,7 +12,10 @@ public class MainGraphe {
         //Chemin glouton = r.glouton1("F", "D", 4);
         //if (glouton != null) System.out.println(glouton.toString());
         //else System.out.println("Aucun chemin n'a été trouvé");
-        System.out.println(Math.cos(120));
+        System.out.println(Math.cos(Math.PI));
+        System.out.println(Math.cos(Math.PI));
+
+        System.out.println(Math.sin(50));
         System.out.println(Math.sin(50));
         Fenetre f = new Fenetre();
     }

@@ -18,7 +18,7 @@ class Fenetre extends JFrame {
         this.setVisible(true);
     }
 
-    void go(){
+    private void go(){
         final JTextField text = new JTextField("Reseau.json");
         text.setColumns(14);
         final JButton btn = new JButton("Envoyer");
