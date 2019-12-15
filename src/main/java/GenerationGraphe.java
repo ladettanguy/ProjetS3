@@ -62,7 +62,7 @@ public class GenerationGraphe {
             String str;
             while ((str = read.readLine()) != null){
                 String[] split = str.split(" ");
-                Chemin c = r.glouton1(split[0], split[1], Integer.parseInt(split[2]));
+                Chemin c = r.glouton(split[0], split[1], Integer.parseInt(split[2]), false);
                 if (c == null){
                     System.out.println("Le chemin entre les routeur " + split[0] + " et " + split[1] + " ne passe pas.");
                     return;

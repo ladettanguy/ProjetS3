@@ -1,3 +1,5 @@
+import java.io.File;
+import java.io.FileWriter;
 import java.util.ArrayList;
 
 public class Reseau {
@@ -28,6 +30,75 @@ public class Reseau {
                 }
                 if (ajouter) getRouteur(ancienRouteur.getNom()).ajouterConnexion(new Connexion(ancienneConnexion.getDistance(), getRouteur(ancienneConnexion.getRouteurDestinataire().getNom()), nombreFrequencesParConnexion));
             }
+        }
+    }
+
+    public ArrayList<ArrayList<String>> genererListeTestPourTetris(int nombreTests, int nombreMaxFrequence){
+        ArrayList<ArrayList<String>> result = new ArrayList<>();
+        for (int i = 0; i < nombreTests; i++) {
+            String nomRouteur1 = listeRouteur.get((int) (Math.random()*listeRouteur.size())).getNom();
+            String nomRouteur2 = nomRouteur1;
+            while (nomRouteur1 == nomRouteur2){
+                nomRouteur2 = listeRouteur.get((int) (Math.random()*listeRouteur.size())).getNom();
+            }
+            result.add(new ArrayList<String>());
+            result.get(i).add(nomRouteur1);
+            result.get(i).add(nomRouteur2);
+            result.get(i).add(String.valueOf((int) (Math.random()*nombreMaxFrequence)+1));
+        }
+        return result;
+    }
+
+    public void tetrisMethodeForcer(ArrayList<ArrayList<String>> array, boolean plusCourt){
+        int nbDeConnexionsQuiPassentPas = array.size();
+        for (ArrayList<String> test : array) {
+            Chemin c = null;
+            if (plusCourt) c = glouton(test.get(0), test.get(1), Integer.parseInt(test.get(2)), true);
+            else c = glouton(test.get(0), test.get(1), Integer.parseInt(test.get(2)), false);
+            if (c != null){
+                c.desactiverFrequences();
+                nbDeConnexionsQuiPassentPas--;
+            }
+        }
+        
+        try{
+            int i = 1;
+            File f = null;
+            if (plusCourt) f = new File("MethodePlusPetitChemin\\" + i + ".txt");
+            else f = new File("MethodePlusPetiteFrequence\\" + i + ".txt");
+            while (f.exists()){
+                i++;
+                if (plusCourt) f = new File("MethodePlusPetitChemin\\" + i + ".txt");
+                else f = new File("MethodePlusPetiteFrequence\\" + i + ".txt");
+            }
+            f.createNewFile();
+            FileWriter file = new FileWriter(f);
+            if (nbDeConnexionsQuiPassentPas == 0) file.write("Les " + array.size() + " connexions sont passées\n\n");
+            else file.write(nbDeConnexionsQuiPassentPas + " fail sur " + array.size() + " au total\n\n");
+            toTXT(file);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public void toTXT(FileWriter file){
+        try{
+            file.write("1 : Fréquence encore libre | 0 : Fréquence utilisée\n\n");
+            for (Routeur r : listeRouteur) {
+                for (Connexion c : r.getConnexions()) {
+                    for (int i = 0; i < nombreFrequencesParConnexion; i++) {
+                        if (c.getFrequence(i)) file.write("1");
+                        else file.write("0");
+                    }
+                    file.write("\n");
+                }
+            }
+            file.write("\n");
+            file.close();
+        }
+        catch (Exception e){
+            e.printStackTrace();
         }
     }
 
@@ -150,7 +221,7 @@ public class Reseau {
         return null;
     }
 
-    public Chemin glouton1(String nomRouteurDepart, String nomRouteurArrivee, int nbFrequenceConsecutives){
+    public Chemin glouton(String nomRouteurDepart, String nomRouteurArrivee, int nbFrequenceConsecutives, boolean plusCourt){
         Routeur r = getRouteur(nomRouteurDepart);
         if (r.isNull()) return null;
 
@@ -161,20 +232,33 @@ public class Reseau {
         for (int i = -1; i < nbFrequenceConsecutives-1; i++) {
             tabfrequences[i+1] = i;
         }
+        Chemin ch = null;
         for (int i = 0; i < nombreFrequencesParConnexion - nbFrequenceConsecutives + 1; i++) {
             for (int j = 0; j < nbFrequenceConsecutives; j++) {
                 tabfrequences[j]++;
             }
             Chemin c = new Reseau(this, tabfrequences).plusCourtChemin(nomRouteurDepart, nomRouteurArrivee);
             if (c != null) {
-                Chemin ch = new Chemin();
-                ch.setFrequenceUtilisees(tabfrequences);
-                for (Routeur routeur : c.getListeRouteur()) {
-                    ch.ajouterFin(getRouteur(routeur.getNom()));
+                if (plusCourt){
+                    if (ch == null || c.getLongueurChemin()<ch.getLongueurChemin()){
+                        ch = new Chemin();
+                        ch.copyFrequenceUtilisees(tabfrequences);
+                        for (Routeur routeur : c.getListeRouteur()) {
+                            ch.ajouterFin(getRouteur(routeur.getNom()));
+                        }
+                    }
                 }
-                return ch;
+                else {
+                    ch = new Chemin();
+                    ch.setFrequenceUtilisees(tabfrequences);
+                    for (Routeur routeur : c.getListeRouteur()) {
+                        ch.ajouterFin(getRouteur(routeur.getNom()));
+                    }
+                    return ch;
+                }
             }
         }
+        if (plusCourt) return ch;
         return null;
     }
 

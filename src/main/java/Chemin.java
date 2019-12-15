@@ -22,6 +22,13 @@ public class Chemin {
         this.frequenceUtilisees = frequenceUtilisees;
     }
 
+    public void copyFrequenceUtilisees(int[] frequenceUtilisees){
+        this.frequenceUtilisees = new int[frequenceUtilisees.length];
+        for (int i = 0; i < frequenceUtilisees.length; i++) {
+            this.frequenceUtilisees[i] = frequenceUtilisees[i];
+        }
+    }
+
     public void ajouterDebut(Routeur r){
         listeRouteur.add(0, r);
     }
