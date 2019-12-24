@@ -7,7 +7,7 @@ class Fenetre extends JFrame {
     private Panneau contentPane = new Panneau();
 
     Fenetre(){
-        this.setSize(400, 500);
+        this.setSize(4000, 5000);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(true);
@@ -45,7 +45,7 @@ class Fenetre extends JFrame {
                 }
                 else {
                     if ((checkTxt.isSelected())) {
-                        contentPane.setReseau(GenerationGraphe.genererTXT(text.getText(), 10));
+                        contentPane.setReseau(GenerationGraphe.genererTXT(text.getText(), false));
                     }
                 }
                 Graphics g = contentPane.getGraphics();
@@ -65,7 +65,7 @@ class Fenetre extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(checkJson.isSelected()) checkJson.setSelected(false);
-                text.setText("graphe.txt");
+                text.setText("Options\\graphe.txt");
             }
         });
     }

@@ -5,6 +5,7 @@ import org.json.simple.parser.JSONParser;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.util.ArrayList;
 
 public class GenerationGraphe {
     private static JSONParser parser = new JSONParser();
@@ -35,18 +36,20 @@ public class GenerationGraphe {
         return r;
     }
 
-    public static Reseau genererTXT(String filePath,int nbMaxFrequences){
-        Reseau r = new Reseau(nbMaxFrequences);
+    public static Reseau genererTXT(String filePath, boolean hope){
         try {
             BufferedReader read = new BufferedReader(new FileReader(new File(filePath)));
             String str;
-            str = read.readLine();
+            int nbMaxFrequences = TraiterOptionTXT.getIntEndOfLine(read.readLine());
+            Reseau r = new Reseau(nbMaxFrequences);
+            read.readLine();
             while ((str = read.readLine()) != null && !str.equals("Connexions :")){
                 r.addRouteur(str);
             }
             while ((str = read.readLine()) != null){
                 String[] split = str.split(" ");
-                r.ajouterConnexion(split[0], split[1], Integer.parseInt(split[2]));
+                if (hope) r.ajouterConnexion(split[0], split[1], 1);
+                else r.ajouterConnexion(split[0], split[1], Integer.parseInt(split[2]));
             }
             return r;
         }
@@ -56,22 +59,22 @@ public class GenerationGraphe {
         return null;
     }
 
-    public static void traiterTXTGlouton(Reseau r){
+    public static ArrayList<ArrayList<String>> traiterListeRequeteTXT(Reseau r){
+        ArrayList<ArrayList<String>> list = new ArrayList<>();
         try {
-            BufferedReader read = new BufferedReader(new FileReader(new File("listeGlouton.txt")));
+            BufferedReader read = new BufferedReader(new FileReader(new File("Options\\listeRequete.txt")));
             String str;
             while ((str = read.readLine()) != null){
+                list.add(new ArrayList<String>());
                 String[] split = str.split(" ");
-                Chemin c = r.glouton(split[0], split[1], Integer.parseInt(split[2]), false);
-                if (c == null){
-                    System.out.println("Le chemin entre les routeur " + split[0] + " et " + split[1] + " ne passe pas.");
-                    return;
-                }
-                c.desactiverFrequences();
+                list.get(list.size()-1).add(split[0]);
+                list.get(list.size()-1).add(split[1]);
+                list.get(list.size()-1).add(split[2]);
             }
         }
         catch (Exception e){
             e.printStackTrace();
         }
+        return list;
     }
 }

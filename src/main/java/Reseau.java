@@ -33,7 +33,7 @@ public class Reseau {
         }
     }
 
-    public ArrayList<ArrayList<String>> genererListeTestPourTetris(int nombreTests, int nombreMaxFrequence){
+    public ArrayList<ArrayList<String>> genererListeRequetes(int nombreTests, int nombreMaxFrequence){
         ArrayList<ArrayList<String>> result = new ArrayList<>();
         for (int i = 0; i < nombreTests; i++) {
             String nomRouteur1 = listeRouteur.get((int) (Math.random()*listeRouteur.size())).getNom();
@@ -87,6 +87,7 @@ public class Reseau {
             file.write("1 : Fréquence encore libre | 0 : Fréquence utilisée\n\n");
             for (Routeur r : listeRouteur) {
                 for (Connexion c : r.getConnexions()) {
+                    file.write(r.getNom() + " --> " + c.getRouteurDestinataire().getNom() + " : ");
                     for (int i = 0; i < nombreFrequencesParConnexion; i++) {
                         if (c.getFrequence(i)) file.write("1");
                         else file.write("0");
@@ -100,6 +101,25 @@ public class Reseau {
         catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    public static Reseau genererReseauAleatoire(int nombreRouteurs, int nombreMaxConnexionsParRouteur, int nombreFrequencesParConnexion, int distanceMaxDesConnexions, boolean Hope){
+        Reseau r = new Reseau(nombreFrequencesParConnexion);
+        for (int i = 0; i < nombreRouteurs; i++) {
+            r.addRouteur(String.valueOf(i));
+        }
+        if (Hope) distanceMaxDesConnexions = 1;
+        int nbCoMax;
+        for (int i = 0; i < nombreRouteurs; i++) {
+            nbCoMax = (int) (Math.random()*nombreMaxConnexionsParRouteur)+1;
+            while (r.listeRouteur.get(i).getConnexions().size() < nbCoMax) {
+                Routeur routeurArrivee = r.listeRouteur.get((int)(Math.random()*nombreRouteurs));
+                if (routeurArrivee != r.listeRouteur.get(i) && r.listeRouteur.get(i).getConnexionVersUnRouteur(routeurArrivee) == null && routeurArrivee.getConnexions().size() < nombreMaxConnexionsParRouteur){
+                    r.ajouterConnexion(r.listeRouteur.get(i).getNom(), routeurArrivee.getNom(), (int)(Math.random()*distanceMaxDesConnexions)+1);
+                }
+            }
+        }
+        return r;
     }
 
     public void ajouterConnexion(String nomRouteur1, String nomRouteur2, int distance){
