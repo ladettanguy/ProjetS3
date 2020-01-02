@@ -159,6 +159,15 @@ public class Reseau {
         System.out.println("Le routeur " + nomRouteur + " existe déjà.");
     }
 
+    public void removeRouteur(String nomRouteur){
+        Routeur r = getRouteur(nomRouteur);
+        if (r == null){
+            listeRouteur.remove(new Routeur(nomRouteur));
+            return;
+        }
+        System.out.println("Le routeur " + nomRouteur + " n'existe pas.");
+    }
+
     public Chemin plusCourtChemin (String nomRouteurDepart, String nomRouteurArrivee){
 
         // Cherche le routeur correspondant a nomRouteurDepart

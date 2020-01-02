@@ -62,6 +62,11 @@ public class Chemin {
         }
     }
 
+    public boolean contient(Routeur r){
+        return listeRouteur.contains(r);
+    }
+
+
     public String toString(){
         String s = "Chemin : ";
         for (Routeur r : listeRouteur) {
