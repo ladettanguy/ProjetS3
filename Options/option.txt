@@ -1,15 +1,15 @@
 Attention, les paramètres des options doivent obligatoirement se trouver en fin de ligne (pas d'espace ni aucun autre caractère après)
 
-Utiliser le générateur de graphe automatique (1 = Oui, 0 = Non) : 0
+Utiliser le générateur de graphe automatique (1 = Oui, 0 = Non) : 1
 Utiliser des distances réelles (1) ou des distances en Hope (0) : 1
 Si on utilise le générateur, renseigner les options suivantes :
     Nombre de routeurs : 10
     Nombre de fréquences par connexions : 20
     Nombre maximum de connexions par routeur (généralement 2 ou 3) : 3
-    Distance maximum de chaque connexion (inutile si on prend les distances en Hope) : 5
+    Distance maximum de chaque connexion (inutile si on prend les distances en Hope) : 3
 Si Non, s'assurer que graphe.txt soit complété
 
-Utiliser le générateur de requêtes automatique (1 = Oui, 0 = Non) : 0
+Utiliser le générateur de requêtes automatique (1 = Oui, 0 = Non) : 1
 Si Oui, renseigner les options suivantes :
     Nombre de requêtes : 30
     Nombre fréquences max demandés par les requêtes : 5
