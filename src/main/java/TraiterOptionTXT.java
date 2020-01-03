@@ -5,7 +5,10 @@ import java.util.ArrayList;
 
 public class TraiterOptionTXT {
     public static void traiterOptionTXT(){
-        int[] tab = listeInt();
+        traiterListeTXT(listeInt());
+    }
+
+    public static void traiterListeTXT(int[] tab){
         boolean hope = false;
         Reseau r;
         ArrayList<ArrayList<String>> listeRequetes = new ArrayList<>();
@@ -15,33 +18,14 @@ public class TraiterOptionTXT {
             System.out.println("Erreur pour la distance hope");
             return;
         }
-        if (tab[0] == 1){
-            System.out.println("je genere graphe aléatoire | nbRouteurs:" + tab[2] +
-                    " | nbMaxCoParRouteur:" + tab[4] + "| nbFreqParCo:" + tab[3] +
-                    " | DistanceMaxDesCo:" + tab[5] + " | hope:" + tab[1] + " " + hope);
-            // nombreRouteurs
-            // nombreMaxConnexionsParRouteur
-            // nombreFrequencesParConnexion
-            // distanceMaxDesConnexions
-            // boolean Hope
-            r = Reseau.genererReseauAleatoire(tab[2], tab[4], tab[3], tab[5], hope);
-        }
-        else if (tab[0] == 0){
-            System.out.println("je genere un graphe.txt");
-            r = GenerationGraphe.genererTXT("Options\\graphe.txt", hope);
-        }
+        if (tab[0] == 1) r = Reseau.genererReseauAleatoire(tab[2], tab[4], tab[3], tab[5], hope);
+        else if (tab[0] == 0) r = GenerationGraphe.genererTXT("Options\\graphe.txt", hope);
         else {
             System.out.println("Erreur pour la ligne de generation de graphe aléatoire ou non");
             return;
         }
-        if (tab[6] == 1){
-            System.out.println("generateur de requete auto | nb requetes:" + tab[7] + " | nombreMaxFrequence:" + tab[8]);
-            listeRequetes = r.genererListeRequetes(tab[7], tab[8]);
-        }
-        else if(tab[6] == 0){
-            System.out.println("j'utilise le generateurglouton.TXT");
-            listeRequetes = GenerationGraphe.traiterListeRequeteTXT(r);
-        }
+        if (tab[6] == 1) listeRequetes = r.genererListeRequetes(tab[7], tab[8]);
+        else if(tab[6] == 0) listeRequetes = GenerationGraphe.traiterListeRequeteTXT(r);
         else {
             System.out.println("Erreur pour la ligne de generation de requêtes aléatoire ou non");
             return;
