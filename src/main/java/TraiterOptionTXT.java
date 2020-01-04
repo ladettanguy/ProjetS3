@@ -27,15 +27,16 @@ public class TraiterOptionTXT {
         if (tab[6] == 1) listeRequetes = r.genererListeRequetes(tab[7], tab[8]);
         else if(tab[6] == 0) listeRequetes = GenerationGraphe.traiterListeRequeteTXT(r);
         else {
-            System.out.println("Erreur pour la ligne de generation de requêtes aléatoire ou non");
+            System.out.println("Erreur pour le choix de generation de requêtes aléatoire ou non");
             return;
         }
         System.out.println("Liste des requêtes utilisés :");
         for (int i = 0; i < listeRequetes.size(); i++) {
             System.out.println(listeRequetes.get(i).get(0) + " " + listeRequetes.get(i).get(1) + " " + listeRequetes.get(i).get(2));
         }
-        r.tetrisMethodeForcer(listeRequetes, false);
-        new Reseau(r, new int[0]).tetrisMethodeForcer(listeRequetes, true);
+
+        r.tetrisMethodeForcer(listeRequetes, false, 0);
+        new Reseau(r, new int[0]).tetrisMethodeForcer(listeRequetes, true, 0);
     }
 
     private static int[] listeInt(){

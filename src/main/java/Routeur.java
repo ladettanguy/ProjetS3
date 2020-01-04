@@ -9,6 +9,12 @@ public class Routeur {
         connexions = new ArrayList<Connexion>();
     }
 
+    public void reinitialiserFrequences(){
+        for (Connexion c : connexions) {
+            c.reinitialiserFrequences();
+        }
+    }
+
     public ArrayList<Connexion> getConnexions() {
         return connexions;
     }

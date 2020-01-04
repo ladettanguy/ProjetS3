@@ -12,6 +12,12 @@ public class Connexion {
         }
     }
 
+    public void reinitialiserFrequences(){
+        for (int i = 0; i < tableauFrequences.length; i++) {
+            tableauFrequences[i] = true;
+        }
+    }
+
     public boolean[] getTableauFrequences() {
         return tableauFrequences;
     }

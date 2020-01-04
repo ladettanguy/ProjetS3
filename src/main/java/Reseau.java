@@ -1,4 +1,6 @@
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
 
@@ -49,7 +51,39 @@ public class Reseau {
         return result;
     }
 
-    public void tetrisMethodeForcer(ArrayList<ArrayList<String>> array, boolean plusCourt){
+    public void reinitialiserFrequences(){
+        for (Routeur r : listeRouteur) {
+            r.reinitialiserFrequences();
+        }
+    }
+
+    public ArrayList<ArrayList<String>> trier (ArrayList<ArrayList<String>> tab, boolean croissant){
+        ArrayList<ArrayList<String>> array = new ArrayList<>();
+        array.addAll(tab);
+        ArrayList<ArrayList<String>> out = new ArrayList<>();
+        while (array.size() != 0) {
+            int min = Integer.parseInt(array.get(0).get(2));
+            int indice = 0;
+            for (int i = 1; i<array.size(); i++) {
+                if (Integer.parseInt(array.get(i).get(2)) < min) {
+                    min = Integer.parseInt(array.get(i).get(2));
+                    indice = i;
+                }
+            }
+            if (croissant) out.add(array.get(indice));
+            else out.add(0, array.get(indice));
+            array.remove(indice);
+        }
+        return out;
+    }
+
+    public void tetrisMethodeForcer(ArrayList<ArrayList<String>> array, boolean plusCourt, int entrezZeroIciEtPosezPasDeQuestions){
+        if (entrezZeroIciEtPosezPasDeQuestions != 0) {
+            reinitialiserFrequences();
+            if (entrezZeroIciEtPosezPasDeQuestions == 1) array = trier(array, true);
+            else array = trier(array, false);
+        }
+
         int nbDeConnexionsQuiPassentPas = array.size();
         for (ArrayList<String> test : array) {
             Chemin c = null;
@@ -63,19 +97,45 @@ public class Reseau {
         
         try{
             int i = 1;
-            File f = null;
-            if (plusCourt) f = new File("MethodePlusPetitChemin\\" + i + ".txt");
-            else f = new File("MethodePlusPetiteFrequence\\" + i + ".txt");
+            String startPath = "Resultats\\";
+            if (entrezZeroIciEtPosezPasDeQuestions == 0) startPath += "RequetesNonTriees\\";
+            else if (entrezZeroIciEtPosezPasDeQuestions == 1) startPath += "RequetesTrieesCroissant\\";
+            else if (entrezZeroIciEtPosezPasDeQuestions == 2) startPath += "RequetesTrieesDecroissant\\";
+            else {
+                System.out.println("Y'a un problème quelque part mais je sais pas trop où");
+                return;
+            }
+            if (plusCourt) startPath += "MethodePlusPetitChemin\\";
+            else startPath += "MethodePlusPetiteFrequence\\";
+
+            File f = new File(startPath + i + ".txt");
+
             while (f.exists()){
                 i++;
-                if (plusCourt) f = new File("MethodePlusPetitChemin\\" + i + ".txt");
-                else f = new File("MethodePlusPetiteFrequence\\" + i + ".txt");
+                f = new File(startPath + i + ".txt");
             }
             f.createNewFile();
             FileWriter file = new FileWriter(f);
-            if (nbDeConnexionsQuiPassentPas == 0) file.write("Les " + array.size() + " connexions sont passées\n\n");
+            if (nbDeConnexionsQuiPassentPas == 0) file.write("Les " + array.size() + " requetes sont passées\n\n");
             else file.write(nbDeConnexionsQuiPassentPas + " fail sur " + array.size() + " au total\n\n");
+
+            String s = "";
+            if (entrezZeroIciEtPosezPasDeQuestions == 0) s += "Requetes non triees - ";
+            else if (entrezZeroIciEtPosezPasDeQuestions == 1) s += "Requetes triees croissant - ";
+            else if (entrezZeroIciEtPosezPasDeQuestions == 2) s += "Requetes triees decroissant - ";
+            if (plusCourt) s += "Methode plus petit chemin.txt";
+            else s += "Methode plus petite frequence.txt";
+
+            File end = new File("Resultats\\DerniersResultats\\" + s);
+            if (!end.exists()) end.createNewFile();
+            FileWriter copy = new FileWriter(end);
+            if (nbDeConnexionsQuiPassentPas == 0) copy.write("Les " + array.size() + " requetes sont passées\n\n");
+            else copy.write(nbDeConnexionsQuiPassentPas + " fail sur " + array.size() + " au total\n\n");
+
             toTXT(file);
+            toTXT(copy);
+
+            if (entrezZeroIciEtPosezPasDeQuestions != 2) tetrisMethodeForcer(array, plusCourt, entrezZeroIciEtPosezPasDeQuestions + 1);
         }
         catch (Exception e){
             e.printStackTrace();
