@@ -7,8 +7,8 @@ import java.util.ArrayList;
 
 public class Panneau extends JPanel {
 
-    private Reseau r;
-    private Chemin c;
+
+    private Chemin c;private Reseau r;
     private int rayon;
 
     protected void paintComponent(Graphics g){

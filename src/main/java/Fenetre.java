@@ -31,6 +31,8 @@ class Fenetre extends JFrame {
 
     private final JButton creeRouteur = new JButton("Crée");
     private final JButton creeConnexion = new JButton("Crée");
+    private final JButton suppConnexion = new JButton("Supprimé");
+    private final JButton suppRouteur = new JButton("Supprimé");
     private final JButton retour = new JButton("Retour");
 
     Fenetre(){
@@ -81,8 +83,11 @@ class Fenetre extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 Reseau r = contentPane.getReseau();
                 r.getRouteur(connexionRouteur.getText()).ajouterConnexion(
-                    new Connexion(Integer.parseInt(distance.getText()),r.getRouteur(connexionRouteurDestinataire.getText()),Integer.parseInt(nbFrequenceConnexion.getText()))
+                    new Connexion(Integer.parseInt(distance.getText()),r.getRouteur(connexionRouteurDestinataire.getText()),20)
                     );
+                r.getRouteur(connexionRouteurDestinataire.getText()).ajouterConnexion(
+                        new Connexion(Integer.parseInt(distance.getText()),r.getRouteur(connexionRouteur.getText()),20)
+                );
                 repaint();
             }
         });
@@ -91,7 +96,6 @@ class Fenetre extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 contentPane.setChemin(null);
-                contentPane.setReseau(null);
                 contentPane.removeAll();
                 basicFrame();
             }
@@ -197,7 +201,6 @@ class Fenetre extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 contentPane.setChemin(null);
-                contentPane.setReseau(new Reseau(50));
                 contentPane.removeAll();
                 editFrame();
             }
