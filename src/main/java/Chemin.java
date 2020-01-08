@@ -46,6 +46,13 @@ public class Chemin {
         return distance;
     }
 
+    public Routeur getSuiv(Routeur r){
+        if(this.contient(r)){
+            return listeRouteur.get(listeRouteur.indexOf(r)+1);
+        }
+        return null;
+    }
+
     public Routeur getDernierRouteur(){
         return listeRouteur.get(listeRouteur.size()-1);
     }
@@ -65,7 +72,6 @@ public class Chemin {
     public boolean contient(Routeur r){
         return listeRouteur.contains(r);
     }
-
 
     public String toString(){
         String s = "Chemin : ";

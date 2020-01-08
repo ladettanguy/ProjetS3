@@ -1,8 +1,8 @@
 public class MainGraphe {
     public static void main(String[] args){
 
-        TraiterOptionTXT.traiterOptionTXT();
+        //TraiterOptionTXT.traiterOptionTXT();
 
-        //Fenetre f = new Fenetre();
+        Fenetre f = new Fenetre();
     }
 }

@@ -8,7 +8,8 @@ import java.util.ArrayList;
 public class Panneau extends JPanel {
 
 
-    private Chemin c;private Reseau r;
+    private Chemin c;
+    private Reseau r;
     private int rayon;
 
     protected void paintComponent(Graphics g){
@@ -24,6 +25,8 @@ public class Panneau extends JPanel {
     }
 
     Reseau getReseau(){return r;}
+
+    Chemin getChemin(){return c;}
 
     void genererReseau(Graphics g){
         if (r != null) {
@@ -53,7 +56,8 @@ public class Panneau extends JPanel {
                     for (Connexion co : rout.getConnexions()) {
                         int indexEnvoyeur = routeurs.indexOf(rout);
                         int indexDestinataire = routeurs.indexOf(co.getRouteurDestinataire());
-                        if(c != null && c.contient(co.getRouteurDestinataire()) && c.contient(rout))
+                        Routeur routeurDestinataire = co.getRouteurDestinataire();
+                        if(c != null && c.contient(rout) && c.contient(routeurDestinataire) && (c.getListeRouteur().indexOf(rout) == c.getListeRouteur().indexOf(routeurDestinataire)-1 || c.getListeRouteur().indexOf(rout) == c.getListeRouteur().indexOf(routeurDestinataire)+1))
                             g2d.setColor(Color.RED);
                         g2d.drawLine(xRouteurs.get(indexEnvoyeur)+15,yRouteurs.get(indexEnvoyeur)+15,xRouteurs.get(indexDestinataire)+15,yRouteurs.get(indexDestinataire)+15);
                         g2d.setColor(Color.BLACK);
@@ -68,6 +72,10 @@ public class Panneau extends JPanel {
             }
             catch (Exception e){}
         }
+    }
+
+    public void desactiveFrequence(){
+        c.desactiverFrequences();
     }
 }
 

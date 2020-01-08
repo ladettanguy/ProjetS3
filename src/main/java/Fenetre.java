@@ -46,105 +46,6 @@ class Fenetre extends JFrame {
         contentPane.setLayout(null);
         basicFrame();
         this.setVisible(true);
-    }
-
-    public void editFrame(){
-        repaint();
-
-        this.add(nomRouteur);
-        nomRouteur.setBounds(130,10,140,30);
-        this.add(creeRouteur);
-        creeRouteur.setBounds(130,50,80,25);
-
-        this.add(connexionRouteur);
-        connexionRouteur.setBounds(350,10,140,30);
-        this.add(connexionRouteurDestinataire);
-        connexionRouteurDestinataire.setBounds(350,40,140,30);
-        this.add(nbFrequenceConnexion);
-        nbFrequenceConnexion.setBounds(490,10,140,30);
-        this.add(distance);
-        distance.setBounds(490,40,140,30);
-        this.add(creeConnexion);
-        creeConnexion.setBounds(450,80,80,25);
-
-        this.add(retour);
-        retour.setBounds(10,10,80,25);
-
-        creeRouteur.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                contentPane.getReseau().addRouteur(nomRouteur.getText());
-                repaint();
-            }
-        });
-
-        creeConnexion.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Reseau r = contentPane.getReseau();
-                r.getRouteur(connexionRouteur.getText()).ajouterConnexion(
-                    new Connexion(Integer.parseInt(distance.getText()),r.getRouteur(connexionRouteurDestinataire.getText()),20)
-                    );
-                r.getRouteur(connexionRouteurDestinataire.getText()).ajouterConnexion(
-                        new Connexion(Integer.parseInt(distance.getText()),r.getRouteur(connexionRouteur.getText()),20)
-                );
-                repaint();
-            }
-        });
-
-        retour.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                contentPane.setChemin(null);
-                contentPane.removeAll();
-                basicFrame();
-            }
-        });
-    }
-
-    public void basicFrame(){
-        repaint();
-
-        text.setColumns(14);
-        connexionDebut.setColumns(14);
-        connexionFin.setColumns(14);
-        checkJson.setSelected(true);
-
-        this.add(edit);
-        edit.setBounds(10,10,80,25);
-
-
-        this.add(checkJson);
-        checkJson.setBounds(130, 10, 60, 30);
-        checkJson.setSelected(true);
-
-        this.add(checkTxt);
-        checkTxt.setBounds(130, 35, 60, 30);
-
-        this.add(plusCour);
-        plusCour.setBounds(650,80,140,30);
-
-        this.add(text);
-        text.setBounds(200,25,140,30);
-
-        this.add(send);
-        send.setBounds(350,25,90,30);
-
-
-        this.add(connexionFin);
-        connexionFin.setBounds(500,35,140,30);
-
-        this.add(connexionDebut);
-        connexionDebut.setBounds(500,10,140,30);
-
-        this.add(nbFrequence);
-        nbFrequence.setBounds(500,80,140,30);
-
-        this.add(dijkstra);
-        dijkstra.setBounds(660,8,90,30);
-
-        this.add(glouton);
-        glouton.setBounds(660,37,90,30);
 
         send.addActionListener(new ActionListener() {
             @Override
@@ -193,6 +94,8 @@ class Fenetre extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 contentPane.setChemin(contentPane.getReseau().glouton(connexionDebut.getText(),connexionFin.getText(),Integer.parseInt(nbFrequence.getText()),plusCour.isSelected()));
+                System.out.println(contentPane.getChemin());
+                contentPane.desactiveFrequence();
                 repaint();
             }
         });
@@ -205,5 +108,106 @@ class Fenetre extends JFrame {
                 editFrame();
             }
         });
+
+        creeRouteur.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                contentPane.getReseau().addRouteur(nomRouteur.getText());
+                repaint();
+            }
+        });
+
+        creeConnexion.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Reseau r = contentPane.getReseau();
+                r.getRouteur(connexionRouteur.getText()).ajouterConnexion(
+                        new Connexion(Integer.parseInt(distance.getText()),r.getRouteur(connexionRouteurDestinataire.getText()),20)
+                );
+                r.getRouteur(connexionRouteurDestinataire.getText()).ajouterConnexion(
+                        new Connexion(Integer.parseInt(distance.getText()),r.getRouteur(connexionRouteur.getText()),20)
+                );
+                repaint();
+            }
+        });
+
+        retour.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                contentPane.setChemin(null);
+                contentPane.removeAll();
+                basicFrame();
+            }
+        });
+    }
+
+    public void editFrame(){
+        repaint();
+
+        this.add(nomRouteur);
+        nomRouteur.setBounds(130,10,140,30);
+        this.add(creeRouteur);
+        creeRouteur.setBounds(130,50,80,25);
+
+        this.add(connexionRouteur);
+        connexionRouteur.setBounds(350,10,140,30);
+        this.add(connexionRouteurDestinataire);
+        connexionRouteurDestinataire.setBounds(350,40,140,30);
+        this.add(nbFrequenceConnexion);
+        nbFrequenceConnexion.setBounds(490,10,140,30);
+        this.add(distance);
+        distance.setBounds(490,40,140,30);
+        this.add(creeConnexion);
+        creeConnexion.setBounds(450,80,80,25);
+
+        this.add(retour);
+        retour.setBounds(10,10,80,25);
+
+    }
+
+    public void basicFrame(){
+        repaint();
+
+        text.setColumns(14);
+        connexionDebut.setColumns(14);
+        connexionFin.setColumns(14);
+        checkJson.setSelected(true);
+
+        this.add(edit);
+        edit.setBounds(10,10,80,25);
+
+
+        this.add(checkJson);
+        checkJson.setBounds(130, 10, 60, 30);
+        checkJson.setSelected(true);
+
+        this.add(checkTxt);
+        checkTxt.setBounds(130, 35, 60, 30);
+
+        this.add(plusCour);
+        plusCour.setBounds(650,80,140,30);
+
+        this.add(text);
+        text.setBounds(200,25,140,30);
+
+        this.add(send);
+        send.setBounds(350,25,90,30);
+
+
+        this.add(connexionFin);
+        connexionFin.setBounds(500,35,140,30);
+
+        this.add(connexionDebut);
+        connexionDebut.setBounds(500,10,140,30);
+
+        this.add(nbFrequence);
+        nbFrequence.setBounds(500,80,140,30);
+
+        this.add(dijkstra);
+        dijkstra.setBounds(660,8,90,30);
+
+        this.add(glouton);
+        glouton.setBounds(660,37,90,30);
+
     }
 }
